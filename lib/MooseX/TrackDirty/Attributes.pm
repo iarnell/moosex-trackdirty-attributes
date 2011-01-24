@@ -20,11 +20,11 @@ MooseX::TrackDirty::Attributes - Track dirtied attributes
 
 =head1 VERSION
 
-Version 0.02
+Version 0.03
 
 =cut
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 
 =head1 SYNOPSIS
@@ -265,12 +265,12 @@ sub init_meta {
     ### in init_meta: $options{for_class} 
     Moose->init_meta(%options);
 
-    Moose::Util::MetaRole::apply_metaclass_roles(
-        for_class => $options{for_class},
-        metaclass_roles =>
-            ['MooseX::TrackDirty::Attributes::Role::Meta::Class'],
-        attribute_metaclass_roles =>
-            ['MooseX::TrackDirty::Attributes::Role::Meta::Attribute'],
+    Moose::Util::MetaRole::apply_metaroles(
+        for => $options{for_class},
+        class_metaroles => {
+            class => ['MooseX::TrackDirty::Attributes::Role::Meta::Class'],
+            attribute => ['MooseX::TrackDirty::Attributes::Role::Meta::Attribute'],
+        },
     );
 
     Moose::Util::MetaRole::apply_base_class_roles( 
